@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>타이니팜 특대글자 복사기</title>
+  <style>
+    :root {
+      --mainPaddingX: 1em;
+      --mainPaddingY: 2em;
+      --mainPadding: var(--mainPaddingY) var(--mainPaddingX);
+      --mainColor: orangered;
+      --mainColorDarker: hsl(16, 100%, 40%);
+      --shadowColor: hsla(0, 0%, 0%, 25%);
+      --textColor: hsl(0, 0%, 16%);
+    }
+    @font-face {
+      font-family: 'TMoneyDungunbaram';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindRegular.woff') format('woff');
+      font-weight: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'TMoneyDungunbaram';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
+      font-weight: 800;
+      font-display: swap;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      color: inherit;
+      text-align: center;
+      text-decoration: none;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+    body {
+      font-size: calc(16px * var(--fontScale, 1));
+    }
+    h2 {
+      color: var(--textColor);
+      font: 800 2em / 1.25 'TMoneyDungunbaram';
+      font-size: max(2em, 1.75rem);
+    }
+    p, span, a, button {
+      color: var(--textColor);
+      font-size: 1rem;
+      font: normal 1rem / 1.5 'TMoneyDungunbaram';
+    }
+    small {
+      font-size: smaller;
+    }
+    button {
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+    a:active,
+    button:active {
+      filter: brightness(96%);
+    }
+    .btn_primary {
+      padding: 1em;
+      border-radius: 0.5em;
+      color: #fff;
+      background: var(--mainColor);
+    }
+    #wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      color: var(--mainColor);
+      padding: calc(var(--mainPaddingY) * 2) var(--mainPaddingX);
+    }
+    section {
+      max-width: 1200px;
+      margin: auto;
+      padding: var(--mainPadding);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 1em;
+    }
+    .background {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url(img/background.jpg) center / cover;
+      z-index: -1;
+    }
+    button[data-emoji] {
+      width: max-content;
+      padding: 1em;
+      box-shadow: 0 0 2px var(--shadowColor);
+      border-radius: 0.5em;
+      border: none;
+      background: blanchedalmond;
+      font-size: 1em;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      transition: filter 80ms;
+    }
+    button[data-emoji]::before {
+      content: attr(data-emoji-content);
+      padding: 0.5em;
+      background: hsla(0, 0%, 100%, 50%);
+      text-align: left;
+      white-space: pre;
+    }
+    button[data-emoji]::after {
+      content: attr(data-emoji-name);
+      margin: auto;
+      padding: 0.25em;
+      color: var(--textColor);
+      font-size: 1rem;
+    }
+    .btn_search {
+      position: fixed;
+      right: 1em;
+      bottom: 2em;
+      padding: 0.75em;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 240ms;
+    }
+    .observed .btn_search {
+      opacity: 1;
+      visibility: visible;
+    }
+    .btn_search {
+      width: 3.5em;
+      height: 3.5em;
+      color: #fff;
+      --btnGutter: 15%;
+    }
+    .btn_search::after {
+      content: '';
+      position: absolute;
+      left: var(--btnGutter);
+      top: var(--btnGutter);
+      width: 50%;
+      height: 50%;
+      border-radius: 50%;
+      border: 0.25em solid;
+      background: inherit;
+    }
+    .btn_search::before {
+      content: '';
+      position: absolute;
+      right: var(--btnGutter);
+      bottom: var(--btnGutter);
+      width: 50%;
+      height: 0;
+      border-top: 0.25em solid;
+      transform: rotate(45deg);
+      transform-origin: right;
+    }
+    footer {
+      padding: var(--mainPadding);
+      color: var(--textColor);
+      background: linear-gradient(var(--shadowColor) -5%, #fff 5%);
+    }
+    @media (max-width: 600px) {
+      body {--fontScale: 0.9;}
+    }
+    @media (max-width: 500px) {
+      body {--fontScale: 0.8;}
+    }
+    @media (max-width: 400px) {
+      body {--fontScale: 0.7;}
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <header>
+      <h2 style="color: var(--mainColor);">
+        <small>게시글을 fun하고 특별하게!</small>
+        <br>
+        타이니팜 특대글자 복사기
+      </h2>
+      <p style="margin-top: 1em; color: var(--mainColor); font-family: 'sans-serif';">(모든 텍스트는 220byte 이하입니다.)</p>
+    </header>
+    <section>
+      <div class="background"></div>
+      <!-- <button class="btn_search btn_primary"></button> -->
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌕🌑🌑\n🌓🌕🌑🌕🌗\n🌑🌑🌑🌑🌑\n🌑🌑🌕🌑🌑\n🌕🌕🌕🌕🌕" data-emoji-name="조"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌑🌑🌑🌓🌑\n🌓🌕🌗🌓🌑\n🌔🌑🌖🌓🌕\n🌓🌕🌗🌓🌑\n🌑🌑🌑🌓🌑\n🌑🌑🌑🌑🌑" data-emoji-name="아"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌑🌔🌕🌖🌑\n🌓🌕🌑🌕🌗\n🌑🌔🌕🌖🌑\n🌑🌓🌑🌗🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌑🌑🌑" data-emoji-name="요"></button>
+      <button data-emoji="❤️🧡🧡❤️🧡🧡❤️\n❤️💛💛❤️💛💛❤️\n🧡💛💛💛💛💛🧡\n❤️🧡💛💛💛🧡❤️\n❤️❤️🧡💛🧡❤️❤️\n❤️❤️❤️🧡❤️❤️❤️" data-emoji-name="하트"></button>
+      <button data-emoji="🦁\n💛\n🧡💛\n💖🧡💛\n❤️💖🧡💛\n❤️❤️💖🧡💛" data-emoji-name="피라미드"></button>
+      <button data-emoji="💛🧡💖❤️❤️💖🧡💛\n🧡💖❤️❤️❤️❤️💖🧡\n💖❤️❤️❤️❤️❤️❤️💖\n❤️❤️❤️💖💖❤️❤️❤️\n❤️❤️💖🧡🧡💖❤️❤️\n❤️💖🧡💛💛🧡💖❤️" data-emoji-name="그라데이션"></button>
+      <button data-emoji="💛🧡💖❤️❤️💖🧡💛💛🧡💖❤️❤️\n🧡💖❤️💖💖❤️💖🧡🧡💖❤️💖💖\n💖❤️💖🧡🧡💖❤️💖💖❤️💖🧡🧡\n❤️💖🧡💛💛🧡💖❤️❤️💖🧡💛💛" data-emoji-name="그라데이션(롱)"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌑🌑🌕🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌔🌑🌖🌑\n🌑🌓🌕🌗🌑\n🌑🌑🌕🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌑🌑🌑" data-emoji-name="호"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌓🌑🌗🌗🌑\n🌓🌕🌗🌕🌗\n🌓🌑🌗🌗🌑\n🌓🌕🌗🌗🌑\n🌑🌑🌕🌕🌗\n🌑🌑🌑🌑🌗" data-emoji-name="박"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌑🌕🌑🌓🌑\n🌑🌕🌑🌓🌑\n🌓🌑🌗🌓🌕\n🌓🌑🌗🌓🌑\n🌗🌑🌓🌓🌑\n🌑🌑🌑🌑🌑" data-emoji-name="사"></button>
+      <button data-emoji="🌓🌕🌕🌕🌗\n🌑🌑🌕🌑🌑\n🌑🌔🌑🌖🌑\n🌓🌕🌑🌕🌗\n🌑🌑🌑🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌕🌑🌑" data-emoji-name="주"></button>
+      <button data-emoji="🌑🌑🌑🌑🌗\n🌓🌕🌗🌕🌗\n🌓🌑🌗🌑🌗\n🌓🌕🌗🌕🌗\n🌑🌑🌑🌑🌗\n🌑🌑🌗🌑🌑\n🌑🌑🌕🌕🌗" data-emoji-name="면"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌕🌕🌗🌗🌓\n🌑🌑🌗🌗🌓\n🌑🌓🌑🌕🌕\n🌑🌗🌑🌗🌓\n🌓🌑🌑🌗🌓\n🌑🌑🌑🌑🌑" data-emoji-name="개"></button>
+      <button data-emoji="🌑🌑🌕🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌕🌑🌑\n🌓🌕🌑🌕🌗\n🌑🌑🌑🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌕🌑🌑" data-emoji-name="추"></button>
+      <button data-emoji="🌑🌕🌕🌕🌑\n🌑🌕🌑🌕🌑\n🌑🌕🌕🌕🌑\n🌑🌑🌑🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌕🌑🌑\n🌑🌕🌕🌕🌑\n🌑🌑🌑🌕🌑\n🌑🌕🌕🌕🌑\n🌑🌕🌑🌑🌑" data-emoji-name="물"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌑🌑🌗\n🌑🌑🌑🌑🌗\n🌑🌑🌕🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌑🌑🌑" data-emoji-name="고"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌓🌕🌕🌗🌗\n🌑🌑🌑🌗🌗\n🌑🌑🌑🌗🌗\n🌑🌑🌑🌑🌗\n🌑🌑🌑🌑🌑" data-emoji-name="기"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑🌑\n🌑🌑🌕🌑🌑🌗\n🌓🌕🌕🌕🌗🌗\n🌑🌕🌑🌕🌑🌕\n🌑🌓🌕🌗🌑🌗\n🌑🌑🌑🌑🌑🌗\n🌑🌑🌑🌑🌑🌑" data-emoji-name="하"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌕🌑🌑\n🌓🌕🌑🌕🌗\n🌑🌑🌑🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌕🌑🌑" data-emoji-name="주"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌔🌕🌖🌑🌗\n🌕🌑🌕🌑🌗\n🌔🌕🌖🌑🌗\n🌑🌕🌑🌑🌗\n🌕🌕🌕🌕🌗\n🌑🌑🌑🌑🌗" data-emoji-name="외"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌕🌕🌗🌓🌓\n🌑🌑🌕🌕🌓\n🌑🌑🌗🌓🌓\n🌑🌓🌓🌕🌓\n🌑🌗🌑🌓🌓\n🌑🌑🌑🌑🌑" data-emoji-name="계"></button>
+      <button data-emoji="🌑🌑🌑🌗🌓🌕🌗\n🌓🌕🌗🌗🌓🌑🌗\n🌓🌑🌕🌗🌓🌕🌗\n🌓🌕🌗🌗🌑🌑🌑\n🌑🌑🌕🌓🌕🌕🌕\n🌑🌔🌑🌖🌑🌕🌑\n🌑🌑🌕🌑🌔🌑🌖" data-emoji-name="멍뭉"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌑🌑🌗\n🌑🌑🌑🌑🌗\n🌑🌑🌑🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌑🌑🌑" data-emoji-name="그"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌓🌕🌕🌗🌗\n🌑🌑🌑🌗🌗\n🌓🌕🌕🌗🌗\n🌓🌑🌑🌑🌗\n🌓🌕🌕🌗🌗\n🌑🌑🌑🌑🌑" data-emoji-name="리"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌓🌗🌑🌑🌗\n🌓🌗🌑🌑🌗\n🌓🌗🌑🌑🌗\n🌓🌕🌕🌑🌗\n🌑🌑🌑🌑🌑" data-emoji-name="니"></button>
+      <button data-emoji="🌓🌕🌕🌕🌗\n🌓🌑🌑🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌕🌑🌑\n🌓🌕🌕🌕🌗\n🌑🌑🌑🌑🌑\n🌓🌕🌕🌕🌗\n🌓🌑🌑🌑🌑\n🌓🌕🌕🌕🌗" data-emoji-name="돋"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌑🌔🌕🌖🌑\n🌓🌕🌑🌕🌗\n🌑🌔🌕🌖🌑\n🌑🌑🌑🌑🌑\n🌕🌕🌕🌕🌕\n🌑🌑🌑🌑🌑\n🌑🌕🌑🌑🌑\n🌑🌕🌕🌕🌗" data-emoji-name="은"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌓🌑🌑🌑🌗\n🌓🌑🌑🌑🌕\n🌓🌕🌕🌗🌗\n🌑🌑🌑🌑🌕\n🌑🌓🌕🌗🌗\n🌑🌔🌑🌖🌑\n🌑🌓🌕🌗🌑\n🌑🌑🌑🌑🌑" data-emoji-name="냥"></button>
+      <button data-emoji="🌑🌑🌑🌑🌑\n🌑🌑🌑🌑🌗\n🌔🌕🌖🌑🌗\n🌕🌑🌕🌑🌗\n🌔🌕🌖🌑🌗\n🌑🌑🌑🌑🌗\n🌑🌑🌑🌑🌑" data-emoji-name="이"></button>
+      <button data-emoji="🌓🌗🌑🌓🌕🌗🌓🌕🌗\n🌓🌗🌑🌓🌗🌑🌓🌑🌗\n🌓🌗🌑🌓🌕🌗🌓🌑🌗\n🌓🌗🌑🌓🌗🌑🌓🌑🌗\n🌓🌕🌗🌓🌕🌗🌓🌕🌗" data-emoji-name="LEO"></button>
+      <button data-emoji="💖💖💖💖💖\n💖🤍💖💖💖\n💖🤍💖💖💖\n💖🤍💖💖💖\n💖🤍💖💖💖\n💖🤍🤍🤍💖\n💖💖💖💖💖" data-emoji-name="L(하트)"></button>
+      <button data-emoji="💖💖💖💖💖\n💖🤍🤍🤍💖\n💖🤍💖💖💖\n💖🤍🤍💖💖\n💖🤍💖💖💖\n💖🤍🤍🤍💖\n💖💖💖💖💖" data-emoji-name="E(하트)"></button>
+      <button data-emoji="💖💖💖💖💖\n💖🤍🤍🤍💖\n💖🤍💖🤍💖\n💖🤍💖🤍💖\n💖🤍💖🤍💖\n💖🤍🤍🤍💖\n💖💖💖💖💖" data-emoji-name="O(하트)"></button>
+      <button data-emoji="\n💖🤍💖💖🤍🤍💖🤍🤍🤍\n💖🤍💖💖🤍💖💖🤍💖🤍\n💖🤍💖💖🤍🤍💖🤍💖🤍\n💖🤍💖💖🤍💖💖🤍💖🤍\n💖🤍🤍💖🤍🤍💖🤍🤍🤍" data-emoji-name="LEO(하트)"></button>
+      <button data-emoji="💖💖💖💖\n💖좋아요💖\n💖아좋요💖\n💖요아좋💖\n💖💖💖💖" data-emoji-name="좋아요(빙고)"></button>
+    </section>
+    <footer>
+      <p style="margin-bottom: 0.5em;">문의</p>
+      <p>Game ID: 사자자리Leo</p>
+      <a href="mailto:tnfsajajarileo@gmail.com">E-mail: tnfsajajarileo@gmail.com</a>
+    </footer>
+  </div>
+  <script>
+    const EMOJIS = document.querySelectorAll('[data-emoji]');
+    const SECTION = document.querySelector('section');
+    
+    function getEmoji(e) {
+      return e.dataset.emoji;
+    }
+
+    function setEmojiContent() {
+      EMOJIS.forEach(e => {
+        let content = getEmoji(e).replace(/\\n/g, '\n');
+        e.dataset.emojiContent = content;
+      });
+    } setEmojiContent();
+
+    EMOJIS.forEach(e => {
+      e.addEventListener('click', copyEmoji);
+    });
+
+    function copyEmoji(e) {
+      let content = getEmoji(e.currentTarget);
+      navigator.clipboard.writeText(content).then(() => {
+        alert('복사되었습니다.');
+      });
+    }
+
+    window.addEventListener('scroll', () => {
+      let sectionBot = SECTION.getBoundingClientRect().bottom;
+      let windowHeight = window.innerHeight;
+      sectionBot > windowHeight ?
+      SECTION.classList.add('observed') :
+      SECTION.classList.remove('observed');
+    });
+  </script>
+</body>
+</html>
