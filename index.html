@@ -10,7 +10,6 @@
       --mainPaddingY: 2em;
       --mainPadding: var(--mainPaddingY) var(--mainPaddingX);
       --mainColor: orangered;
-      --mainColorDarker: hsl(16, 100%, 40%);
       --shadowColor: hsla(0, 0%, 0%, 25%);
       --textColor: hsl(0, 0%, 16%);
     }
@@ -49,7 +48,7 @@
     }
     h3 {
       color: var(--textColor);
-      font: normal 1.25em / 1.25 'TMoneyDungunbaram';
+      font: 800 1.25em / 1.25 'TMoneyDungunbaram';
       font-size: max(1.25em, 1.12rem);
     }
     p, span, a, button {
@@ -187,7 +186,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: opacity 180ms;
+      transition: all 125ms;
     }
     #modal_search:not(.open) {
       opacity: 0;
@@ -197,7 +196,7 @@
       max-width: 20rem;
       padding: var(--mainPadding);
       border-radius: 1em;
-      background: var(--mainColor);
+      background: hsl(16, 95%, 52.5%);
       display: flex;
       flex-direction: column;
       gap: 1.25em;
@@ -217,6 +216,7 @@
       border: 1px solid var(--shadowColor);
       background: #efefef;
       line-height: 1;
+      -webkit-tap-highlight-color: transparent;
     }
     #modal_search article button.on {
       color: #fff;
@@ -319,7 +319,7 @@
         <button data-emoji="💖💖💖💖\n💖좋아요💖\n💖아좋요💖\n💖요아좋💖\n💖💖💖💖">[모양]좋아요(빙고)</button>
       </article>
     </section>
-    <section id="modal_search" class="open">
+    <section id="modal_search">
       <aside>
         <h3 style="color: #fff; text-align: left;">초성 검색</h3>
         <article class="initial_area">
