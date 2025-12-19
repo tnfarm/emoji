@@ -72,7 +72,7 @@
       padding: 0.75em;
       border-radius: 0.5em;
       color: #fff;
-      background: var(--mainColor);
+      background: hsl(10, 100%, 60%);
       -webkit-tap-highlight-color: transparent;
     }
     #wrap {
@@ -186,7 +186,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: all 125ms;
     }
     #modal_search:not(.open) {
       opacity: 0;
@@ -196,7 +195,7 @@
       max-width: 20rem;
       padding: var(--mainPadding);
       border-radius: 1em;
-      background: hsl(16, 95%, 52.5%);
+      background: hsl(10, 100%, 60%);
       display: flex;
       flex-direction: column;
       gap: 1.25em;
@@ -322,7 +321,7 @@
     <section id="modal_search">
       <aside>
         <h3 style="color: #fff; text-align: left;">초성 검색</h3>
-        <article class="initial_area">
+        <article>
           <button onclick="filterEmoji('ㄱ')">ㄱ</button>
           <button onclick="filterEmoji('ㄴ')">ㄴ</button>
           <button onclick="filterEmoji('ㄷ')">ㄷ</button>
