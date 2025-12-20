@@ -390,7 +390,7 @@
     }
 
     function copyEmoji(e) {
-      let content = getEmoji(e.currentTarget);
+      let content = e.currentTarget.dataset.emoji;
       navigator.clipboard.writeText(content).then(() => {
         alert('복사되었습니다.');
       });
